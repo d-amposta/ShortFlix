@@ -1,12 +1,10 @@
 <?php
-	function get_title() {
-		echo 'Shortflix';
-	}
+function get_title() {
+	echo 'Shortflix';
+}
 
-	function display_content() {
-
-		if(!empty($_SESSION['id'])){
-?>
+function display_content() {
+	if(!empty($_SESSION['id'])){ ?>
 		<div class="row form">
 			<div class="col-md-3">
 				<p>Change password</p>
@@ -27,12 +25,8 @@
 				</form>
 			</div>
 		</div>
-<?php
-	
-		}else {
-			header('location:login.php');
-		}
-	}
-
-	require_once('home-index.php');
-?>
+	<?php } else {
+		header('location:login.php');
+	};
+}; ?>
+<?php require_once('partials/home-index.php'); ?>
