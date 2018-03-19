@@ -46,6 +46,11 @@ main {
 	margin-bottom: 10px;
 }
 
+.navbar-text {
+	line-height: 69px;
+	margin: 0;
+}
+
 .navbar-toggle {
 	position: relative;
 	top: 50%;
@@ -119,7 +124,7 @@ main {
 	color: #fff;
 }
 
-.login,
+.login_btn,
 .search_button {
 	cursor: pointer;
 }

@@ -69,7 +69,7 @@
                 </li>
             <?php } else { ?>
                     <li class="login_popup">
-                      <p class="login navbar-text">Log In</p>
+                      <p class="login_btn navbar-text">Log In</p>
                     </li>
             <?php }; ?>
         </ul>

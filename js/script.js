@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	var screenWidth = $(window).width();
 	if(screenWidth > 768){
-	$(".login").on("click", function(){
+	$(".login_btn").on("click", function(){
 		$("#login-container").toggle();
 	});
 	};
