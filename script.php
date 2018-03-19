@@ -30,7 +30,6 @@ $row=mysqli_fetch_assoc($result);
   		if(mysqli_num_rows($result)>0){
   		while($row = mysqli_fetch_assoc($result)){
   			extract($row);
-  		$_SESSION['message']= "Login Successful";
   			$_SESSION['username'] = $username;
   			$_SESSION['firstname'] = $firstname;
   			$_SESSION['lastname'] = $lastname;
@@ -63,7 +62,6 @@ if(isset($_POST['login'])){
 	if(mysqli_num_rows($result)>0){
 		while($row = mysqli_fetch_assoc($result)){
 			extract($row);
-			$_SESSION['message']= "Login Successful";
 			$_SESSION['username'] = $username;
 			$_SESSION['firstname'] = $firstname;
 			$_SESSION['lastname'] = $lastname;
@@ -85,6 +83,7 @@ if(isset($_POST['submit_video'])){
 	$sql = "INSERT INTO videos (title, synopsis, url, date_uploaded, filmmaker, category, user_id)
 			VALUES ('$title', '$synopsis', '$url', '$date_uploaded', '$filmmaker', '$category', '$user_id')";
 	mysqli_query($conn,$sql);
+	$_SESSION['message'] = "Video added successfully";
 	header('location:index.php');
 }
 
@@ -92,15 +91,30 @@ function get_thumbnail($url){
 	if(preg_match("/youtube/", $url)){
 		$youtubeUrlArr = explode("=",$url);
 		$youtubeVideoId = $youtubeUrlArr['1'];
-		echo 'http://img.youtube.com/vi/'.$youtubeVideoId.'/hqdefault.jpg';
+		echo 'http://img.youtube.com/vi/'.$youtubeVideoId.'/mqdefault.jpg';
 		}
 	if(preg_match("/vimeo/", $url)){
 		$vimeoUrlArr = explode("/", $url);
 		$vimeoVideoId = $vimeoUrlArr[3];
 		$arr_vimeo = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$vimeoVideoId.php"));
-	    $thumbURL = $arr_vimeo[0]['thumbnail_medium'];
+	    $thumbURL = $arr_vimeo[0]['thumbnail_large'];
 	    echo $thumbURL;
 	}	
+}
+
+function get_featured_thumbnail($url){
+	if(preg_match("/youtube/", $url)){
+		$youtubeUrlArr = explode("=",$url);
+		$youtubeVideoId = $youtubeUrlArr['1'];
+		echo 'http://img.youtube.com/vi/'.$youtubeVideoId.'/maxresdefault.jpg';
+		}
+	if(preg_match("/vimeo/", $url)){
+		$vimeoUrlArr = explode("/", $url);
+		$vimeoVideoId = $vimeoUrlArr[3];
+		$arr_vimeo = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$vimeoVideoId.php"));
+	    $thumbURL = $arr_vimeo[0]['thumbnail_large'];
+	    echo $thumbURL;
+	}		
 }
 
 function embed_video($url){

@@ -6,7 +6,7 @@ function get_title() {
 function display_content() {
 	if(!empty($_SESSION['id'])){ ?>
 		<div class="row form">
-			<div class="col-md-3">
+			<div class="col-xs-12 col-md-4 col-md-offset-4">
 				<p>Change password</p>
 				<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 					<div class="form-group">

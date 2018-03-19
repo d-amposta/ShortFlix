@@ -18,9 +18,12 @@ function display_content() {
 	$result = mysqli_query($conn,$sql);
 	$row = mysqli_fetch_assoc($result);
 	$total_rec = $row["count(id)"]; ?>
-	<div class="container show_all_video">
+	<div class="container">
 		<!-- result statistics -->
-		<p class="search_result_statistic"><em><?php echo $total_rec ?></em> results for <strong><?php echo $_GET['query'] ?></strong></p>
+		<div class="result_statistic">
+			<p><?php echo $total_rec ?> results for <?php echo $_GET['query'] ?></p>	
+		</div>
+		<div class="result_section_border"></div>
 		<?php /*get all videos from query*/
 		$sql = "SELECT *
 				FROM videos
@@ -28,6 +31,7 @@ function display_content() {
 				ORDER BY id DESC
 				LIMIT 10";
 		$result = mysqli_query($conn,$sql);
+		$result_count = 0;
 		if(mysqli_num_rows($result)>0){
 			while($row=mysqli_fetch_assoc($result)){
 				extract($row);
@@ -43,14 +47,22 @@ function display_content() {
 								</div>
 							</div>
 							<!-- info -->
-							<div class="col-xs-12 col-sm-7">
-								<a href="watch.php?v=<?php echo $row['id'] ?>"><p class="title_small"><?php echo $row['title'] ?></p></a>
-								<p><?php echo $row['synopsis'] ?></p>
+							<div class="col-xs-12 col-sm-9 col-md-7">
+								<div class="result_title">
+									<a href="watch.php?v=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a>	
+								</div>
+								<div class="result_synopsis">
+									<p><?php echo $row['synopsis'] ?></p>	
+								</div>
 							</div>
 						</div>	 <!-- row -->
 					</div> <!-- col -->
 				</div> <!-- result_container -->
-			<?php }; //while ?>
+				<?php $result_count += 1; 
+				if($result_count < mysqli_num_rows($result)){ ?>
+					<div class="result_section_border"></div>
+				<?php }; ?>
+				<?php }; //while ?>
 			<!-- data for ajax -->
 			<div class="load-more" data-lastID="<?php echo $postID ?>" data-query="<?php echo $_GET['query'] ?>">
 				<p class="loading">Loading...</p>

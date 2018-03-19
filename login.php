@@ -6,7 +6,7 @@ function get_title() {
 
 function display_content() { ?>
 	<div class="row">
-		<div class="login">
+		<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-4 col-md-offset-4 login">
 			<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
 				<div class="form-group">
 					<label for="username">Username/Email</label>

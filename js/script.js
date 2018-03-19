@@ -13,6 +13,10 @@ $(document).ready(function() {
 		$(".login_popup").html("<a href='login.php'>Log In</a>")
 	};
 
+	$(".search_button").on("click", function() {
+		$(".search-container").slideToggle();
+	})
+
 	$(".dropdown_options").on("click", function() {
 		$(".video_options").toggle();
 	});
@@ -67,6 +71,5 @@ $(document).ready(function() {
 			});
 		}
 	});
-
 	
 });

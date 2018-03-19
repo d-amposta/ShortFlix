@@ -1,79 +1,158 @@
 <?php
 function get_title() {
-	echo 'Shortflix';
+	echo 'ShortFlix';
 }
 
 function display_content() { ?>
 	<div class="row">
-		<div class="col-xs-12 col-md-10">
-			<?php //call db
-			require("connection.php");
-			//pick random video
-			$sql = "SELECT *
-					FROM videos
-					ORDER BY RAND()
-					LIMIT 1";
-			$result = mysqli_query($conn,$sql);
-			if(mysqli_num_rows($result)>0){
-				$row=mysqli_fetch_assoc($result);
-				$url = $row['url'];	?>
-				<div class="row watch_container">
-					<!-- video -->
-					<div class="col-xs-12 col-md-10 col-md-offset-1">
-						<div class="embed-responsive embed-responsive-16by9">
-							<?php embed_video($row['url']) ?>	
-						</div>
+		<?php require("connection.php");
+		$sql = "SELECT *
+				FROM videos
+				ORDER BY RAND()
+				LIMIT 1";
+		$result = mysqli_query($conn,$sql);
+		$row = mysqli_fetch_assoc($result);
+
+		?>
+		<div class="featured_short_container" style="background: url(<?php get_featured_thumbnail($row['url']) ?>) no-repeat center/cover">
+			<div class="featured_short_about">
+				<div class="featured_content">
+					<div class="featured_title">
+						<a href="watch.php?v=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a>
 					</div>
-					<!-- info -->
-					<div class="col-xs-12 col-md-10 col-md-offset-1">
-						<p class="title"><?php echo $row['title'] ?></p>
-						<p>Uploaded: <?php echo $row['date_uploaded'] ?></p>
-						<p>By: <?php echo $row['filmmaker'] ?></p>
-						<p><?php echo $row['synopsis'] ?></p>
-						<!-- admin options -->
-						<?php
-						//only show if user is logged in as admin
-						if(!empty($_SESSION['id']) && $_SESSION['role'] == 'admin'){
-						?>
-						<div class="dropdown_options">
-							<span class="glyphicon glyphicon-menu-down"></span>
-						</div>
-						<div class="video_options">
-							<a href="edit-video.php?v=<?php echo $row['id'] ?>"><p>Edit</p></a>
-							<a href="delete-video.php?v=<?php echo $row['id'] ?>"><p>Delete</p></a>
-						</div>
-						<?php } //if ?>
+					<div class="featured_synopsis">
+						<p><?php echo $row['synopsis'] ?></p>	
 					</div>	
 				</div>
-			<?php 	} //if ?>	
-		</div>
-		<div class="col-xs-12 col-md-2 suggestion_box">
-			<p>Recently Added</p>
-			<div class="row thumbnail_container">
-			<?php $current_video = $row['id'];
-			//display other videos
-			$sql = "SELECT *
-					FROM videos
-					WHERE id !=". $current_video ."
-					ORDER BY RAND()
-					LIMIT 5";
-
-			$result = mysqli_query($conn,$sql);
-
-				if(mysqli_num_rows($result)>0){
-					while($row=mysqli_fetch_assoc($result)){ ?>
-					<div class="thumbnail_content">
-						<!-- thumbnail -->
-						<div class="thumb_container">
-							<a href="watch.php?v=<?php echo $row['id'] ?>"><img src="<?php get_thumbnail($row['url']) ?>" class="video_thumb"></a>
-						</div>
-						<!-- title -->
-						<a href="watch.php?v=<?php echo $row['id'] ?>"><p class="thumb_title"><?php echo $row['title'] ?></p></a>
-					</div>
-					<?php } /*while*/ ?>
-				<?php } /*if*/ ?>
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="select_box">
+			<div class="select_header">
+				<p>Suggested</p>	
+			</div>
+			<div class="select_content">
+				<div class="row thumbnail_container">
+					<?php 
+					//display other videos
+					$sql = "SELECT *
+							FROM videos
+							ORDER BY RAND()
+							LIMIT 8";
+
+					$result = mysqli_query($conn,$sql);
+
+					if(mysqli_num_rows($result)>0){
+						while($row=mysqli_fetch_assoc($result)){ ?>
+							<div class="col-xs-12 col-sm-3">
+								<div class="thumbnail_content">
+									<!-- thumbnail -->
+									<div class="thumb_container">
+										<a href="watch.php?v=<?php echo $row['id'] ?>"><img src="<?php get_thumbnail($row['url']) ?>"></a>
+									</div>
+									<!-- title -->
+									<div class="thumb_title_container">
+										<a href="watch.php?v=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a>	
+									</div>
+								</div>	
+							</div>
+						<?php } /*while*/ ?>
+					<?php } /*if*/ ?>
+				</div>	
+			</div>
+		</div>
+	</div>
+	<div class="section_border"></div>
+	<div class="row">
+		<div class="select_box">
+			<div class="select_header">
+				<p>Recently Added</p>	
+			</div>
+			<div class="select_content">
+				<div class="row thumbnail_container">
+					<?php
+					//display other videos
+					$sql = "SELECT *
+							FROM videos
+							ORDER BY id DESC
+							LIMIT 4";
+
+					$result = mysqli_query($conn,$sql);
+
+					if(mysqli_num_rows($result)>0){
+						while($row=mysqli_fetch_assoc($result)){ ?>
+							<div class="col-xs-12 col-sm-3">
+								<div class="thumbnail_content">
+									<!-- thumbnail -->
+									<div class="thumb_container">
+										<a href="watch.php?v=<?php echo $row['id'] ?>"><img src="<?php get_thumbnail($row['url']) ?>"></a>
+									</div>
+									<!-- title -->
+									<div class="thumb_title_container">
+										<a href="watch.php?v=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a>
+									</div>
+								</div>	
+							</div>
+						<?php } /*while*/ ?>
+					<?php } /*if*/ ?>
+				</div>	
+			</div>
+		</div>
+	</div>
+	<div class="section_border"></div>
+	<?php $sql = "SELECT category
+				  FROM videos
+				  GROUP BY category
+				  ORDER BY RAND()";
+
+  	$result = mysqli_query($conn,$sql);
+  	$section_count = 0;
+  	while($row = mysqli_fetch_assoc($result)){
+	  	$get_category = $row['category']; ?>
+	  	<div class="row">
+			<div class="select_box">
+				<div class="select_header">
+					<p><?php echo $get_category ?></p>
+					<a href="search.php?query=<?php echo $get_category ?>">See All</a>
+				</div>
+				<div class="select_content">
+					<div class="row thumbnail_container">
+						<?php
+						//display other videos
+						$category_sql = "SELECT *
+								FROM videos
+								WHERE category = '$get_category'
+								ORDER BY RAND()
+								LIMIT 4";
+
+						$category_result = mysqli_query($conn,$category_sql);
+
+						if(mysqli_num_rows($category_result)>0){
+							while($category_row=mysqli_fetch_assoc($category_result)){ ?>
+								<div class="col-xs-12 col-sm-3">
+									<div class="thumbnail_content">
+										<!-- thumbnail -->
+										<div class="thumb_container">
+											<a href="watch.php?v=<?php echo $category_row['id'] ?>"><img src="<?php get_thumbnail($category_row['url']) ?>"></a>
+										</div>
+										<!-- title -->
+										<div class="thumb_title_container">
+											<a href="watch.php?v=<?php echo $category_row['id'] ?>"><?php echo $category_row['title'] ?></a>
+										</div>
+									</div>	
+								</div>
+							<?php } /*while*/ ?>
+						<?php } /*if*/ ?>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<!-- display border except the last one -->
+		<?php $section_count += 1; 
+		if ($section_count < mysqli_num_rows($result)){?>
+		<div class="section_border"></div>
+		<?php } ?>	
+ 	<?php }; //while ?>
 <?php } //display_content ?>	
 <?php require_once ('partials/home-index.php'); ?>

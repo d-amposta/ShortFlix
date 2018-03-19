@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-fixed-top">
+  <nav class="navbar">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -11,9 +11,19 @@
         <a href="index.php" class="navbar-brand">ShortFlix</a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="navbar-form navbar-left">
+          <form class="" method="GET" action="search.php">
+            <div class="input-group">
+              <input type="text" name="query" placeholder="Search..." class="form-control">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-default" id="search-button"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div>
+          </form>
+        </div>
         <ul class="nav navbar-nav navbar-left">
           <li><a href="videos.php">See All Videos</a></li>
-          <li class="dropdown mobile_options">
+          <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <?php require('connection.php');
@@ -25,7 +35,7 @@
                   while($row=mysqli_fetch_assoc($result)){
                     extract($row); ?>
                     <li>
-                    <a href="search.php?query=<?php echo $row['category']?>"><?php echo $row['category'] ?></a></li>';
+                    <a href="search.php?query=<?php echo $row['category']?>"><?php echo $row['category'] ?></a></li>
                   <?php }; ?>
                 <?php }; ?>
               </ul>
@@ -63,14 +73,6 @@
                     </li>
             <?php }; ?>
         </ul>
-        <form class="navbar-form navbar-right" method="GET" action="search.php">
-            <div class="input-group">
-              <input type="text" name="query" placeholder="Search..." class="form-control">
-              <span class="input-group-btn">
-                <input type="submit" class="btn btn-default" id="search-button"><span class="glyphicon glyphicon-search"></span>
-              </span>
-            </div>
-          </form>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>

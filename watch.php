@@ -15,66 +15,95 @@ function get_title() {
 
 function display_content() { ?>
 	<div class="row">
-		<div class="col-xs-12 col-md-10">
-			<?php require('connection.php');
-			$id=$_GET['v'];
-			$sql = "SELECT *
-					FROM videos
-					WHERE id= '$id'";
-			$result = mysqli_query($conn, $sql);
-			while($row = mysqli_fetch_assoc($result)){ ?>
-				<div class="row watch_container">
-					<!-- video -->
-					<div class="col-xs-12 col-md-10 col-md-offset-1">
-						<div class="embed-responsive embed-responsive-16by9">
-							<?php embed_video($row['url']) ?>	
+		<div class="col-xs-12 col-md-10 col-md-offset-1">
+			<div class="row">
+				<div class="col-xs-12 col-md-12">
+					<?php require('connection.php');
+					$id=$_GET['v'];
+					$sql = "SELECT *
+							FROM videos
+							WHERE id= '$id'";
+					$result = mysqli_query($conn, $sql);
+					while($row = mysqli_fetch_assoc($result)){ ?>
+						<div class="row watch_container">
+							<!-- video -->
+							<div class="col-xs-12">
+								<div class="embed-responsive embed-responsive-16by9">
+									<?php embed_video($row['url']) ?>
+								</div>
+							</div>
+							<!-- info -->
+							<div class="col-xs-12">
+								<div class="title_container">
+									<p class="title"><?php echo $row['title'] ?></p>	
+								</div>
+								<div class="about_header">
+									<p><span class="glyphicon glyphicon-info-sign"></span>About</p>
+								</div>
+								<div class="about_content">
+									<p>By: <?php echo $row['filmmaker'] ?></p>
+									<p><?php echo $row['synopsis'] ?></p>	
+								</div>
+								
+								<!-- admin options -->
+								<?php
+								//only show if user is logged in as admin
+								if(!empty($_SESSION['id']) && $_SESSION['role'] == 'admin'){
+								?>
+								<div class="dropdown_options">
+									<span class="glyphicon glyphicon-menu-down"></span>
+								</div>
+								<div class="video_options">
+									<a href="edit-video.php?v=<?php echo $row['id'] ?>"><p>Edit</p></a>
+									<a href="delete-video.php?v=<?php echo $row['id'] ?>"><p>Delete</p></a>
+								</div>
+								<?php } //if ?>
+							</div>	
 						</div>
-					</div>
-					<!-- info -->
-					<div class="col-xs-12 col-md-10 col-md-offset-1">
-						<p class="title"><?php echo $row['title'] ?></p>
-						<p>Uploaded: <?php echo $row['date_uploaded'] ?></p>
-						<p>By: <?php echo $row['filmmaker'] ?></p>
-						<p><?php echo $row['synopsis'] ?></p>
-						<!-- admin options -->
-						<?php
-						//only show if user is logged in as admin
-						if(!empty($_SESSION['id']) && $_SESSION['role'] == 'admin'){
-						?>
-						<div class="dropdown_options">
-							<span class="glyphicon glyphicon-menu-down"></span>
-						</div>
-						<div class="video_options">
-							<a href="edit-video.php?v=<?php echo $row['id'] ?>"><p>Edit</p></a>
-							<a href="delete-video.php?v=<?php echo $row['id'] ?>"><p>Delete</p></a>
-						</div>
-						<?php } //if ?>
-					</div>	
+					<?php }; //while ?>	
 				</div>
-			<?php }; //while ?>	
-		</div>
-		<div class="col-xs-12 col-md-2">
-			<p>Suggestions</p>
-			<?php $current_video_id = $_GET['v'];
-			//display other videos
-			$sql = "SELECT *
-					FROM videos
-					WHERE id !=". $current_video_id ."
-					ORDER BY RAND()
-					LIMIT 5";
-			$result = mysqli_query($conn,$sql);
-			if(mysqli_num_rows($result)>0){
-				while($row=mysqli_fetch_assoc($result)){ ?>
-					<div class="thumbnail_content">
-						<!-- thumbnail -->
-						<div class="thumb_container">
-							<a href="watch.php?v=<?php echo $row['id'] ?>"><img src="<?php get_thumbnail($row['url']) ?>" class="video_thumb"></a>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-md-12">
+					<div class="quick_select_box">
+						<div class="select_header">
+							<p>Suggested</p>	
 						</div>
-						<!-- title -->
-						<a href="watch.php?v=<?php echo $row['id'] ?>"><p class="thumb_title"><?php echo $row['title'] ?></p></a>
+						<div class="select_content">
+							<div class="row thumbnail_container">
+								<?php $current_video_id = $_GET['v'];
+								//display other videos
+								$sql = "SELECT *
+										FROM videos
+										WHERE id !=". $current_video_id ."
+										ORDER BY RAND()
+										LIMIT 8";
+								$result = mysqli_query($conn,$sql);
+								if(mysqli_num_rows($result)>0){
+									while($row=mysqli_fetch_assoc($result)){ ?>
+										<div class="col-xs-12 col-sm-3">
+											<div class="row thumbnail_content">
+												<!-- thumbnail -->
+												<div class="col-xs-7 col-sm-12">
+													<div class="thumb_container">
+														<a href="watch.php?v=<?php echo $row['id'] ?>"><img src="<?php get_thumbnail($row['url']) ?>"></a>
+													</div>	
+												</div>
+												<!-- title -->
+												<div class="col-xs-5 col-sm-12">
+													<div class="thumb_title_container">
+														<a href="watch.php?v=<?php echo $row['id'] ?>"><p class="thumb_title"><?php echo $row['title'] ?></p></a>	
+													</div>	
+												</div>
+											</div>	
+										</div>
+									<?php } /*while*/ ?>
+								<?php } /*if*/ ?>
+							</div>	
+						</div>	
 					</div>
-				<?php }; //while ?>
-			<?php }; //if ?>
+				</div>	
+			</div>
 		</div>
 	</div>
 <?php }; //display_content ?>
