@@ -1,18 +1,133 @@
 body {
-	background-color: #1b1b1b;
-	font-family: 'Montserrat', sans-serif;
+	background-color: #111;
+	font-family: 'Roboto', sans-serif;
 	color: #fff;
 	text-shadow: 0.5px 0.5px 1px #313131;
 	height: 100%;
 }
 
+.featured_synopsis p,
+.about_content p,
+footer a,
+footer p {
+	font-family: 'Montserrat', sans-serif;
+}
+
+.navbar-brand {
+	font-weight: 700;
+}
+
+.navbar-nav>li>a,
+.navbar-nav .navbar-text,
+.select_header p {
+	font-weight: 500;
+}
+
+.featured_title a {
+	color: #fff;
+	font-size: 3.5em;
+	font-weight: 700;
+	text-transform: uppercase;
+	margin-bottom: 30px;
+}
+
+.featured_title a:hover {
+	text-decoration: none;
+}
+
+.featured_synopsis p {
+	font-size: 1.3em;
+}
+
+.featured_title a,
+.featured_synopsis p {
+	text-shadow: 0.5px 0.5px 1px #313131;
+}
+
+.select_header p {
+	font-size: 1.2em;
+}
+
+.select_header a {
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: #fff;
+}
+
+.thumb_title_container a {
+	color: #d7d7d7;
+	font-weight: 500;
+}
+
+.thumb_title_container a:hover {
+	text-decoration: none;
+}
+
+.result_title a {
+	color: #fff;
+	font-size: 1.3em;
+	font-weight: 500;
+}
+
+.result_title a:hover {
+	text-decoration: none;
+}
+
+.result_synopsis p {
+	font-size: 0.9em;
+	color: #d7d7d7;
+	margin-top: 5px;
+}
+
+.title {
+	font-size: 1.3em;
+	font-weight: 500;
+}
+
+.about_header .glyphicon {
+	padding-right: 5px;
+	color: #c71d1d;
+}
+
+footer h5,
+footer a,
+footer nav p {
+	color: #d7d7d7;
+	font-size: 1.3em;
+	font-weight: 500;
+	text-transform: uppercase;
+	text-align: center;
+	padding: 5px 0;
+}
+
+footer a {
+	display: block;
+}
+
+footer a:hover {
+	color: #d7d7d7;
+	text-decoration: none;
+}
+
+footer h5 {
+	color:#c71d1d;
+	font-size: 1.35em;
+}
+
+.disclaimer {
+	font-size: 0.8em;
+	text-align: center;
+}
+
 main {
 	height: 100%;
+	margin-top: 100px;
 }
 
 .navbar{
 	height: 70px;
-	background: #000;
+	background: #232323;
 	-webkit-box-shadow: 0 1.5px 4px 0 rgba(0,0,0,0.2);
 	        box-shadow: 0 1.5px 4px 0 rgba(0,0,0,0.2);
 	z-index: 999;
@@ -25,7 +140,7 @@ main {
 }
 
 .navbar-collapse {
-	background-color: #000;
+	background-color: #232323;
 	-webkit-transition: 0.3s;
 	transition: 0.3s;
 }
@@ -54,7 +169,8 @@ main {
 .navbar-toggle {
 	position: relative;
 	top: 50%;
-	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	        transform: translateY(-50%);
 	margin-top: 0;
 	margin-bottom: 0;
 }
@@ -63,8 +179,7 @@ main {
 
 .navbar-brand {
 	color: #c71d1d;
-	font-size: 20px;
-	font-weight: 700;
+	text-transform: uppercase;
 	-webkit-transition: 0.3s;
 	transition: 0.3s;
 }
@@ -93,6 +208,7 @@ main {
 
 .dropdown-menu>li>a {
 	color: #fff;
+	text-shadow: none;
 }
 
 .navbar-form .input-group {
@@ -100,8 +216,7 @@ main {
 }
 
 .navbar-form .input-group>.form-control {
-	background-color: #363636;
-	font-size: 0.8em;
+	background-color: #111;
 	color: #fff;
 	width: 100%;
 }
@@ -149,19 +264,18 @@ main {
 
 .container {
 	width: 95%;
-	height: 100vh;
 	margin: auto;
 }
 
 .featured_short_container {
-	width: 100%;
-	margin:auto;
-}
-
-.featured_short_container {
-	border: 1px solid #313131;
+	width: 95%;
 	height: 500px;
+	margin-top: 0;
+	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
 	padding: 15px 15px;
+	border: 1px solid #313131;
 	position: relative;
 }
 
@@ -180,33 +294,14 @@ main {
 	padding: 30px;
 	position: relative;
 	top: 50%;
-	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	        transform: translateY(-50%);
 	text-align: center;
 }
 
-.featured_title a,
-.featured_synopsis p {
-	text-shadow: 0.5px 0.5px 1px #313131;
-}
-
-.featured_title a {
-	color: #fff;
-	font-size: 3.5em;
-	font-weight: 700;
-	text-transform: uppercase;
-	margin-bottom: 30px;
-}
-
-.featured_title a:hover {
-	text-decoration: none;
-}
-
-.featured_synopsis p {
-	font-size: 1.3em;
-}
 
 .select_box {
-	width: 100%;
+	width: 90%;
 	margin-top: 2.5px;
 	margin-bottom: 2.5px;
 	margin-left: auto;
@@ -216,17 +311,6 @@ main {
 
 .select_header {
 	position: relative;
-}
-
-.select_header p {
-	font-size: 1.2em;
-}
-
-.select_header a {
-	position: absolute;
-	top: 0;
-	right: 0;
-	color: #fff;
 }
 
 .section_border {
@@ -259,18 +343,8 @@ main {
 	padding: 8px 10px;
 }
 
-.title {
-	font-size: 1.3em;
-	font-weight: 700;
-}
-
 .about_header {
 	padding: 3px 10px;
-}
-
-.about_header .glyphicon {
-	padding-right: 5px;
-	color: #c71d1d;
 }
 
 .about_content {
@@ -312,22 +386,13 @@ iframe {
 	height: auto;
 	position: relative;
 	left: 50%;
-	transform: translateX(-50%);
-	margin-bottom: 5px;
+	-webkit-transform: translateX(-50%);
+	        transform: translateX(-50%);
 }
 
 .thumb_title_container {
 	width: 100%;
 	height: 35px;
-}
-
-.thumb_title_container a {
-	font-size: 1em;
-	color: #fff;
-}
-
-.thumb_title_container a:hover {
-	text-decoration: none;
 }
 
 .result_container {
@@ -347,21 +412,6 @@ iframe {
 .result_statistic {
 	margin-top: 10px;
 	margin-bottom: 10px;
-}
-
-.result_title a {
-	font-size: 1.3em;
-	color: #fff;
-}
-
-.result_title a:hover {
-	text-decoration: none;
-}
-
-.result_synopsis p {
-	font-size: 0.9em;
-	color: #888;
-	margin-top: 5px;
 }
 
 .dropdown_options{
@@ -394,21 +444,30 @@ iframe {
 }
 
 .form{
-	margin: 10px 0;
+	margin: 25px 0 30px 0;
+	min-height: 600px;
+}
+
+.btn {
+	width: 100%;
 }
 
 .load-more {
-	display: none;
+	background-color: #343434;
 	text-align: center;
 	width: 100%;
-	padding: 10px 0
+	padding: 10px 0;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	cursor: pointer;
 }
 
-.show_all_video {
-	background-color: #101010;
-	border: 1px solid #313131;
-	border-radius: 4px;
-	padding: 10px 20px;
+.load-more p {
+	margin-bottom: 0;
+}
+
+.load-more img {
+	height: 19.5px;
 }
 
 .page_nav_container {
@@ -424,13 +483,38 @@ iframe {
 	padding: 0 10px;
 }
 
+.user_options .btn {
+	width: 68%;
+}
+
+.user_options .btn-danger {
+	width: 30%;
+}
+
+footer {
+	background-color: #232323;
+	padding: 20px 0;
+	position: relative;
+}
+
+footer nav {
+	margin-bottom: 20px;
+}
+
+
+
 @media screen and (max-width: 991px) {
 	body {
 		background: #000;
 	}
 
+	main {
+		margin-top: 0;
+	}
+
 	.navbar {
 		margin: 0;
+		position: relative;
 	}
 
 	.navbar .container-fluid {
@@ -643,6 +727,10 @@ iframe {
 
 	.thumb_container {
 		max-width: 100%;
+	}
+
+	.thumb_container a>img {
+		margin-bottom: 10px;
 	}
 
 	.form {

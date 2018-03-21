@@ -7,23 +7,26 @@ function get_title() {
 function display_content() { ?>
 	<?php require("connection.php");
 	/*get num of results from query*/
-	$sql = "SELECT count(id)
+	$sql = "SELECT count(id) as num_rows
 			FROM videos";
 
 	$result = mysqli_query($conn,$sql);
 	$row = mysqli_fetch_assoc($result);
-	$total_rec = $row["count(id)"]; ?>
-	<div class='container'>
+	$total_rec = $row["num_rows"]; ?>
+	<div class='container show_all_video'>
 		<div class="result_statistic">
 			<p><?php echo $total_rec ?> results</p>
 		</div>
 		<div class="result_section_border"></div>
-	<?php 	$sql = "SELECT *
-			FROM videos
-			ORDER BY id DESC
-			LIMIT 10";
+	<?php 	
+	$showLimit = 10;
+	$sql = "SELECT *
+	FROM videos
+	ORDER BY id DESC
+	LIMIT ". $showLimit;
 	$result = mysqli_query($conn,$sql);
 	$result_count = 0;
+
 	if(mysqli_num_rows($result)>0){
 		while($row=mysqli_fetch_assoc($result)){
 			extract($row);
@@ -55,9 +58,11 @@ function display_content() { ?>
 				<div class="result_section_border"></div>
 			<?php }; ?>
 		<?php }; //while ?>
-		<div class="load-more" data-lastID="<?php echo $postID ?>">
-			<p class="loading">Loading...</p>
-		</div>
+		<?php if($total_rec > $showLimit) { ?>
+			<div class="load-more" data-lastID="<?php echo $postID ?>">
+				<p class="loading">Load More</p>
+			</div>
+		<?php }; ?>
 	<?php }; //if ?>
 </div> <!-- container -->
 <?php }; // display_content ?>

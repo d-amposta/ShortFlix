@@ -92,7 +92,7 @@ function display_content() { ?>
 												<!-- title -->
 												<div class="col-xs-5 col-sm-12">
 													<div class="thumb_title_container">
-														<a href="watch.php?v=<?php echo $row['id'] ?>"><p class="thumb_title"><?php echo $row['title'] ?></p></a>	
+														<a href="watch.php?v=<?php echo $row['id'] ?>"><?php echo $row['title'] ?></a>	
 													</div>	
 												</div>
 											</div>	

@@ -73,11 +73,11 @@ if(isset($_POST['login'])){
 
 //submit video
 if(isset($_POST['submit_video'])){
-	$title = $_POST["title"];
-	$synopsis = $_POST['synopsis'];
+	$title = mysqli_real_escape_string($conn, $_POST["title"]);
+	$synopsis = mysqli_real_escape_string($conn, $_POST['synopsis']);
 	$url = $_POST['url'];
 	$date_uploaded = date("Y-m-d");
-	$filmmaker = $_POST['filmmaker'];
+	$filmmaker = mysqli_real_escape_string($conn, $_POST['filmmaker']);
 	$category = $_POST['category'];
 	$user_id = $_SESSION['id'];
 	$sql = "INSERT INTO videos (title, synopsis, url, date_uploaded, filmmaker, category, user_id)

@@ -49,12 +49,17 @@ $(document).ready(function() {
 		});
 	});
 
-	$(window).scroll(function() {
-		var lastID = $(".load-more").attr("data-lastID");
-		var query = $(".load-more").attr("data-query");
-		var category = $(".load-more").attr("data-category");
+	$(document).on("click", ".load-more", function() {
+		$(this).html("<img src='assets/loading-icon.gif'>")
+		var lastID = $(this).attr("data-lastID");
+		var query = $(this).attr("data-query");
+		var category = $(this).attr("data-category");
+		var scrollTop = $(document).scrollTop();
+		var windowHeight = $(window).height();
+		var bodyHeight = $(document).height() - windowHeight;
+		var scrollPercentage = (scrollTop/bodyHeight);
 
-		if ($(window).scrollTop() == $(document).height() - $(window).height()  && lastID != 0) {
+		if (lastID != 0) {
 			$.ajax({
 				method: "POST",
 				url: "getdata.php",

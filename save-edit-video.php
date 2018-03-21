@@ -2,11 +2,11 @@
 require ('connection.php');
 			
 $id = $_POST['id'];
-$title = $_POST['title'];
-	$synopsis = $_POST['synopsis'];
-	$url = $_POST['url'];
-	$filmmaker = $_POST['filmmaker'];
-	$category = $_POST['category'];
+$title = mysqli_real_escape_string($conn, $_POST['title']);
+$synopsis = mysqli_real_escape_string($conn, $_POST['synopsis']);
+$url = $_POST['url'];
+$filmmaker = mysqli_real_escape_string($conn, $_POST['filmmaker']);
+$category = $_POST['category'];
 
 $sql = "UPDATE videos
 		SET title = '$title', synopsis = '$synopsis', url = '$url', filmmaker = '$filmmaker', category = '$category'

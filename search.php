@@ -11,25 +11,27 @@ function display_content() {
 	$get_query = $_GET['query'];
 
 	/*get num of results from query*/
-	$sql = "SELECT count(id)
+	$sql = "SELECT count(id) as num_rows
 			FROM videos
 			WHERE title LIKE '%$get_query%' OR category = '$get_query'";
 
 	$result = mysqli_query($conn,$sql);
 	$row = mysqli_fetch_assoc($result);
-	$total_rec = $row["count(id)"]; ?>
-	<div class="container">
+	$total_rec = $row["num_rows"]; ?>
+	<div class="container show_all_video">
 		<!-- result statistics -->
 		<div class="result_statistic">
 			<p><?php echo $total_rec ?> results for <?php echo $_GET['query'] ?></p>	
 		</div>
 		<div class="result_section_border"></div>
-		<?php /*get all videos from query*/
+		<?php 
+		$showLimit = 10;
+		/*get all videos from query*/
 		$sql = "SELECT *
 				FROM videos
 				WHERE title LIKE '%$get_query%' OR category = '$get_query'
 				ORDER BY id DESC
-				LIMIT 10";
+				LIMIT ". $showLimit;
 		$result = mysqli_query($conn,$sql);
 		$result_count = 0;
 		if(mysqli_num_rows($result)>0){
@@ -64,9 +66,11 @@ function display_content() {
 				<?php }; ?>
 				<?php }; //while ?>
 			<!-- data for ajax -->
-			<div class="load-more" data-lastID="<?php echo $postID ?>" data-query="<?php echo $_GET['query'] ?>">
-				<p class="loading">Loading...</p>
-			</div>
+			<?php if($total_rec > $showLimit){ ?>
+				<div class="load-more" data-lastID="<?php echo $postID ?>" data-query="<?php echo $_GET['query'] ?>">
+					<p class="loading">Load More</p>
+				</div>
+			<?php }; ?>
 		<?php }; //if ?>
 	</div> <!-- show_all_video -->
 <?php }; //display_content ?>
